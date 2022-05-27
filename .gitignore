@@ -1,0 +1,6 @@
+node_modules/@*
+*.js.map
+# Project exclude paths
+/node_modules/
+/node_modules/.pnpm/node_modules/
+/index.js
