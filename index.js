@@ -39,9 +39,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
 var utils_1 = require("@taquito/utils");
 var node_crypto_1 = require("node:crypto");
-var gram = '8-gram.json';
-var grams = JSON.parse(fs.readFileSync(gram, 'utf-8'));
-var config = JSON.parse(fs.readFileSync('config.json', 'utf-8'));
+var g = '8-gram.json';
+var c = 'config.json';
+var grams = JSON.parse(fs.readFileSync(g, 'utf-8'));
+var config = JSON.parse(fs.readFileSync(c, 'utf-8'));
 var tokens = function (contract) { return __awaiter(void 0, void 0, void 0, function () {
     var e_1;
     return __generator(this, function (_a) {
@@ -61,54 +62,49 @@ var tokens = function (contract) { return __awaiter(void 0, void 0, void 0, func
     });
 }); };
 var get = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var _loop_1, _i, _a, contract;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+    var _i, _a, contract, data, _b, rb, type, _c, data_1, token, _d, rgb, creator, creater, token_id, token_name, creator_name, creater_name, token_description, _e, hash, _f, fee, recipient, sha, desc, hex;
+    var _g, _h;
+    return __generator(this, function (_j) {
+        switch (_j.label) {
             case 0:
-                _loop_1 = function (contract) {
-                    var data, rb;
-                    return __generator(this, function (_c) {
-                        switch (_c.label) {
-                            case 0: return [4 /*yield*/, tokens(contract)];
-                            case 1:
-                                data = _c.sent();
-                                rb = config.from[contract].rb;
-                                data.forEach(function (token) {
-                                    var _a = token.value, rgb = _a.rgb, creater = _a.creater, token_id = _a.token_id, token_name = _a.token_name, creater_name = _a.creater_name, token_description = _a.token_description;
-                                    if (rb)
-                                        rgb = (0, utils_1.bytes2Char)(rgb);
-                                    token_name = (0, utils_1.bytes2Char)(token_name);
-                                    creater_name = (0, utils_1.bytes2Char)(creater_name);
-                                    token_description = (0, utils_1.bytes2Char)(token_description);
-                                    var _b = /(\S+)ꜩ → \{(\S+)\}/gm.exec(token_description), fee = _b[1], recipient = _b[2];
-                                    var _c = /\[(.+)\]/gm.exec(token_description), hash = _c[1];
-                                    if (hash) {
-                                        var sha = (0, node_crypto_1.createHash)('sha256');
-                                        var desc = token_description.split('\n');
-                                        desc.pop();
-                                        sha.update("".concat(contract, ":").concat(creater, ":").concat(creater_name, ":").concat(token_name, ":").concat(desc.join('\n'), ":").concat(rgb, ":") +
-                                            "".concat(recipient !== null && recipient !== void 0 ? recipient : '', ":").concat(fee !== null && fee !== void 0 ? fee : ''), 'utf-8');
-                                        console.log([hash, sha.digest().toString('hex')]);
-                                    }
-                                });
-                                return [2 /*return*/];
-                        }
-                    });
-                };
                 _i = 0, _a = Object.keys(config.from);
-                _b.label = 1;
+                _j.label = 1;
             case 1:
                 if (!(_i < _a.length)) return [3 /*break*/, 4];
                 contract = _a[_i];
-                return [5 /*yield**/, _loop_1(contract)];
+                return [4 /*yield*/, tokens(contract)];
             case 2:
-                _b.sent();
-                _b.label = 3;
+                data = _j.sent();
+                _b = config.from[contract], rb = _b.rb, type = _b.type;
+                for (_c = 0, data_1 = data; _c < data_1.length; _c++) {
+                    token = data_1[_c];
+                    _d = token.value, rgb = _d.rgb, creator = _d.creator, creater = _d.creater, token_id = _d.token_id, token_name = _d.token_name, creator_name = _d.creator_name, creater_name = _d.creater_name, token_description = _d.token_description;
+                    token_description = (0, utils_1.bytes2Char)(token_description);
+                    _e = (_g = /\[(.+)\]/gm.exec(token_description)) !== null && _g !== void 0 ? _g : [], hash = _e[1];
+                    if ((hash === null || hash === void 0 ? void 0 : hash.length) === 64) {
+                        if (rb)
+                            rgb = (0, utils_1.bytes2Char)(rgb);
+                        token_name = (0, utils_1.bytes2Char)(token_name);
+                        creator_name = (0, utils_1.bytes2Char)(creator_name !== null && creator_name !== void 0 ? creator_name : creater_name);
+                        _f = (_h = /(\S+)ꜩ → \{(\S+)\}/gm.exec(token_description)) !== null && _h !== void 0 ? _h : [], fee = _f[1], recipient = _f[2];
+                        sha = (0, node_crypto_1.createHash)('sha256');
+                        desc = token_description.split('\n');
+                        desc.pop();
+                        sha.update("".concat(contract, ":").concat(creator !== null && creator !== void 0 ? creator : creater, ":").concat(creator_name, ":").concat(token_name, ":").concat(desc.join('\n'), ":").concat(rgb, ":") +
+                            "".concat(recipient !== null && recipient !== void 0 ? recipient : '', ":").concat(fee !== null && fee !== void 0 ? fee : ''), 'utf-8');
+                        hex = sha.digest('hex');
+                        if (hex === hash)
+                            grams.grams.push({ rgb: rgb, token_id: token_id, type: type });
+                    }
+                }
+                config.from[contract].id = data[data.length - 1].value.token_id;
+                _j.label = 3;
             case 3:
                 _i++;
                 return [3 /*break*/, 1];
             case 4:
-                fs.writeFileSync(gram, JSON.stringify(grams, null, 2));
+                fs.writeFileSync(g, JSON.stringify(grams, null, 2));
+                fs.writeFileSync(c, JSON.stringify(config, null, 2));
                 return [2 /*return*/];
         }
     });

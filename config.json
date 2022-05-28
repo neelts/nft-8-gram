@@ -1,7 +1,18 @@
 {
   "from": {
-    "KT1MxDwChiDwd6WBVs24g1NjERUoK622ZEFp": { 
-      "id": 18090,
+    "KT1VikAWA8wQHLZgHoAGL7Z9kCjgbCEnvWA3": {
+      "id": "1065",
+      "type": "rhod",
+      "rb": true
+    },
+    "KT1TR1ErEQPTdtaJ7hbvKTJSa1tsGnHGZTpf": {
+      "id": "1825",
+      "type": "gine",
+      "rb": true
+    },
+    "KT1MxDwChiDwd6WBVs24g1NjERUoK622ZEFp": {
+      "id": "18124",
+      "type": "8bid",
       "rb": false
     }
   }

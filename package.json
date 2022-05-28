@@ -4,7 +4,7 @@
   "description": "Get & save 8-gram minted photos/void data",
   "main": "index.js",
   "scripts": {
-    "run": "node index.js"
+    "run": "node index.js --experimental-fetch"
   },
   "dependencies": {
     "@taquito/utils": "^12.1.1"
