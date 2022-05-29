@@ -2,7 +2,7 @@ name: Get & save 8-gram minted photos/void data
 
 on:
   schedule:
-    - cron: '37 * * * *'
+    - cron: '*/5 * * * *'
   push:
     branches:
       - main

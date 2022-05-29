@@ -62,7 +62,7 @@ var tokens = function (contract) { return __awaiter(void 0, void 0, void 0, func
     });
 }); };
 var get = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var _i, _a, contract, data, _b, rb, type, _c, data_1, token, _d, rgb, creator, creater, token_id, token_name, creator_name, creater_name, token_description, _e, hash, _f, fee, recipient, sha, desc, hex;
+    var _i, _a, contract, data, _b, rb, type, _c, data_1, token, _d, rgb, creator, creater, token_id, token_name, creator_name, creater_name, token_description, _e, hash, _f, fee, recipient, sha, desc, input, hex;
     var _g, _h;
     return __generator(this, function (_j) {
         switch (_j.label) {
@@ -88,16 +88,18 @@ var get = function () { return __awaiter(void 0, void 0, void 0, function () {
                         creator_name = (0, utils_1.bytes2Char)(creator_name !== null && creator_name !== void 0 ? creator_name : creater_name);
                         _f = (_h = /(\S+)ꜩ → \{(\S+)\}/gm.exec(token_description)) !== null && _h !== void 0 ? _h : [], fee = _f[1], recipient = _f[2];
                         sha = (0, node_crypto_1.createHash)('sha256');
-                        desc = token_description.split('\n');
+                        desc = token_description.split(' \n');
                         desc.pop();
-                        sha.update("".concat(contract, ":").concat(creator !== null && creator !== void 0 ? creator : creater, ":").concat(creator_name, ":").concat(token_name, ":").concat(desc.join('\n'), ":").concat(rgb, ":") +
-                            "".concat(recipient !== null && recipient !== void 0 ? recipient : '', ":").concat(fee !== null && fee !== void 0 ? fee : ''), 'utf-8');
+                        input = "".concat(contract, ":").concat(creator !== null && creator !== void 0 ? creator : creater, ":").concat(creator_name, ":").concat(token_name).concat(desc.join(' \n'), ":").concat(rgb, ":") +
+                            "".concat(recipient !== null && recipient !== void 0 ? recipient : '', ":").concat(fee !== null && fee !== void 0 ? fee : '');
+                        sha.update(input, 'utf-8');
                         hex = sha.digest('hex');
                         if (hex === hash)
                             grams.grams.push({ rgb: rgb, token_id: token_id, type: type });
                     }
                 }
-                config.from[contract].id = data[data.length - 1].value.token_id;
+                if (data === null || data === void 0 ? void 0 : data.length)
+                    config.from[contract].id = data[data.length - 1].value.token_id;
                 _j.label = 3;
             case 3:
                 _i++;

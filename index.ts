@@ -60,11 +60,12 @@ const get = async (): Promise<void> => {
 				creator_name = bytes2Char(creator_name ?? creater_name);
 				const [, fee, recipient] = /(\S+)ꜩ → \{(\S+)\}/gm.exec(token_description) ?? [];
 				const sha = createHash('sha256');
-				const desc = token_description.split('\n');
+				const desc = token_description.split(' \n');
 				desc.pop();
+				const input = `${contract}:${creator ?? creater}:${creator_name}:${token_name}${desc.join(' \n')}:${rgb}:` +
+					`${recipient ?? ''}:${fee ?? ''}`;
 				sha.update(
-					`${contract}:${creator ?? creater}:${creator_name}:${token_name}:${desc.join('\n')}:${rgb}:` +
-					`${recipient ?? ''}:${fee ?? ''}`,
+					input,
 					'utf-8'
 				);
 				const hex = sha.digest('hex');
@@ -72,7 +73,8 @@ const get = async (): Promise<void> => {
 					grams.grams.push({ rgb, token_id, type });
 			}
 		}
-		config.from[contract].id = data[data.length - 1].value.token_id;
+		if (data?.length)
+			config.from[contract].id = data[data.length - 1].value.token_id;
 	}
 
 	fs.writeFileSync(g, JSON.stringify(grams, null, 2));
