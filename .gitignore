@@ -1,3 +1,2 @@
-node_modules/.pnpm
-node_modules/@types
+node_modules/
 *.js.map
