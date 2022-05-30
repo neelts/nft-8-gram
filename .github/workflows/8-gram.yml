@@ -49,9 +49,4 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add ./*.json
           git commit -m "update config & feed" --no-verify
-          
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          force: true
+          git diff-index --quiet HEAD || (git commit -a -m "update config & feed" --allow-empty && git push -f)
