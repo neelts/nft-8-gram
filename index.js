@@ -85,7 +85,7 @@ var get = function () { return __awaiter(void 0, void 0, void 0, function () {
                         if (rb)
                             rgb = (0, utils_1.bytes2Char)(rgb);
                         token_name = (0, utils_1.bytes2Char)(token_name);
-                        creator_name = (0, utils_1.bytes2Char)(creator_name !== null && creator_name !== void 0 ? creator_name : creater_name);
+                        creator_name = ((creator_name === null || creator_name === void 0 ? void 0 : creator_name.length) | (creater_name === null || creater_name === void 0 ? void 0 : creater_name.length)) ? (0, utils_1.bytes2Char)(creator_name !== null && creator_name !== void 0 ? creator_name : creater_name) : '';
                         _f = (_h = /(\S+)ꜩ → \{(\S+)\}/gm.exec(token_description)) !== null && _h !== void 0 ? _h : [], fee = _f[1], recipient = _f[2];
                         sha = (0, node_crypto_1.createHash)('sha256');
                         desc = token_description.split(' \n');

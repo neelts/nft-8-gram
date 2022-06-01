@@ -57,7 +57,7 @@ const get = async (): Promise<void> => {
 			if (hash?.length === 64) {
 				if (rb) rgb = bytes2Char(rgb);
 				token_name = bytes2Char(token_name);
-				creator_name = bytes2Char(creator_name ?? creater_name);
+				creator_name = (creator_name?.length | creater_name?.length) ? bytes2Char(creator_name ?? creater_name) : '';
 				const [, fee, recipient] = /(\S+)ꜩ → \{(\S+)\}/gm.exec(token_description) ?? [];
 				const sha = createHash('sha256');
 				const desc = token_description.split(' \n');
