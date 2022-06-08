@@ -42,15 +42,16 @@ const tokens = async (contract: string): Promise<Token[]> => {
 		).json();
 	} catch (e) {
 		console.log(e);
+		return [];
 	}
 }
 
 const get = async (): Promise<void> => {
 
 	for (const contract of Object.keys(config.from)) {
-		const data = await tokens(contract);
+		let data = await tokens(contract);
 		const { rb, type } = config.from[contract];
-		for (const token of data) {
+		for (const token of (data ?? [])) {
 			let {rgb, creator, creater, token_id, token_name, creator_name, creater_name, token_description} = token.value;
 			token_description = bytes2Char(token_description);
 			const [, hash] = /\[(.+)\]/gm.exec(token_description) ?? [];

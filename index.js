@@ -56,37 +56,37 @@ var tokens = function (contract) { return __awaiter(void 0, void 0, void 0, func
             case 3:
                 e_1 = _a.sent();
                 console.log(e_1);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, []];
             case 4: return [2 /*return*/];
         }
     });
 }); };
 var get = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var _i, _a, contract, data, _b, rb, type, _c, data_1, token, _d, rgb, creator, creater, token_id, token_name, creator_name, creater_name, token_description, _e, hash, _f, fee, recipient, sha, desc, input, hex;
-    var _g, _h;
-    return __generator(this, function (_j) {
-        switch (_j.label) {
+    var _i, _a, contract, data, _b, rb, type, _c, _d, token, _e, rgb, creator, creater, token_id, token_name, creator_name, creater_name, token_description, _f, hash, _g, fee, recipient, sha, desc, input, hex;
+    var _h, _j;
+    return __generator(this, function (_k) {
+        switch (_k.label) {
             case 0:
                 _i = 0, _a = Object.keys(config.from);
-                _j.label = 1;
+                _k.label = 1;
             case 1:
                 if (!(_i < _a.length)) return [3 /*break*/, 4];
                 contract = _a[_i];
                 return [4 /*yield*/, tokens(contract)];
             case 2:
-                data = _j.sent();
+                data = _k.sent();
                 _b = config.from[contract], rb = _b.rb, type = _b.type;
-                for (_c = 0, data_1 = data; _c < data_1.length; _c++) {
-                    token = data_1[_c];
-                    _d = token.value, rgb = _d.rgb, creator = _d.creator, creater = _d.creater, token_id = _d.token_id, token_name = _d.token_name, creator_name = _d.creator_name, creater_name = _d.creater_name, token_description = _d.token_description;
+                for (_c = 0, _d = (data !== null && data !== void 0 ? data : []); _c < _d.length; _c++) {
+                    token = _d[_c];
+                    _e = token.value, rgb = _e.rgb, creator = _e.creator, creater = _e.creater, token_id = _e.token_id, token_name = _e.token_name, creator_name = _e.creator_name, creater_name = _e.creater_name, token_description = _e.token_description;
                     token_description = (0, utils_1.bytes2Char)(token_description);
-                    _e = (_g = /\[(.+)\]/gm.exec(token_description)) !== null && _g !== void 0 ? _g : [], hash = _e[1];
+                    _f = (_h = /\[(.+)\]/gm.exec(token_description)) !== null && _h !== void 0 ? _h : [], hash = _f[1];
                     if ((hash === null || hash === void 0 ? void 0 : hash.length) === 64) {
                         if (rb)
                             rgb = (0, utils_1.bytes2Char)(rgb);
                         token_name = (0, utils_1.bytes2Char)(token_name);
                         creator_name = ((creator_name === null || creator_name === void 0 ? void 0 : creator_name.length) | (creater_name === null || creater_name === void 0 ? void 0 : creater_name.length)) ? (0, utils_1.bytes2Char)(creator_name !== null && creator_name !== void 0 ? creator_name : creater_name) : '';
-                        _f = (_h = /([\d.]+).+\{(\S+)\}/gm.exec(token_description)) !== null && _h !== void 0 ? _h : [], fee = _f[1], recipient = _f[2];
+                        _g = (_j = /([\d.]+).+\{(\S+)\}/gm.exec(token_description)) !== null && _j !== void 0 ? _j : [], fee = _g[1], recipient = _g[2];
                         sha = (0, node_crypto_1.createHash)('sha256');
                         desc = token_description.split(' \n');
                         desc.pop();
@@ -100,7 +100,7 @@ var get = function () { return __awaiter(void 0, void 0, void 0, function () {
                 }
                 if (data === null || data === void 0 ? void 0 : data.length)
                     config.from[contract].id = data[data.length - 1].value.token_id;
-                _j.label = 3;
+                _k.label = 3;
             case 3:
                 _i++;
                 return [3 /*break*/, 1];
